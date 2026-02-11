@@ -8,9 +8,13 @@ function App() {
 
   return (
     <>
-      {/* Das hier sorgt dafür, dass das Fenster bei jedem Klick auf 0 springt */}
+      {/* Reset scroll position to top whenever the URL path changes */}
       <ScrollToTop />
       
+      {/* The 'key' prop on Routes is a power-move: 
+        It tells React to treat every route change as a unique instance, 
+        which is necessary if you want to trigger entrance animations on every page.
+      */}
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/project/HipHopInsight" element={<HipHopInsight />} />

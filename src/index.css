@@ -1,20 +1,25 @@
 @import "tailwindcss";
 
 @theme {
+  /* Typography: Outfit */
   --font-sans: "Outfit", sans-serif;
+  
+  /* Color Palette */
   --color-page-bg: #000000;
   --color-nav-text: #8C8C8C;
   --color-nav-selected: #FFFFFF;
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #BDC0C3;
+  
+  /* Component Colors */
   --color-card-bg: #FFFFFF;
   --color-project-bg: #ECECEC;
   --color-tag-text: #5F5F5F;
 }
 
+/* 1. SCROLL FIXES: Essential for Lenis compatibility */
 html {
   background-color: #000000;
-  /* Wichtig für Lenis */
   scroll-behavior: auto !important;
 }
 
@@ -22,6 +27,7 @@ html.lenis, html.lenis body {
   height: auto;
 }
 
+/* 2. LAYOUT DEFAULTS */
 body {
   background-color: var(--color-page-bg);
   color: var(--color-text-primary);
@@ -30,6 +36,5 @@ body {
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
-  /* Verhindert, dass der Browser beim Laden an alte Stellen springt */
   overflow-anchor: none;
 }

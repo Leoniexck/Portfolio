@@ -95,7 +95,7 @@ export default function ImageGallery({ items }) {
         {items.map((item, index) => (
           <SwiperSlide key={index} className="flex flex-col transition-opacity duration-300">
             <div 
-              className="w-full rounded-[20px] overflow-hidden mb-[15px] shadow-2xl relative group/image cursor-zoom-in"
+              className="w-full rounded-[20px] overflow-hidden mb-3.75 shadow-2xl relative group/image cursor-zoom-in"
               onClick={() => handleImageClick(index)}
             >
                <img 
@@ -106,7 +106,7 @@ export default function ImageGallery({ items }) {
                 <div className="absolute inset-0 bg-black/0 group-hover/image:bg-white/5 transition-colors duration-300 pointer-events-none" />
             </div>
             {item.caption && (
-              <p className="text-[#BDC0C3] text-[14px] text-center leading-tight px-2 font-medium">
+              <p className="text-text-secondary text-[14px] text-center leading-tight px-2 font-medium">
                 {item.caption}
               </p>
             )}

@@ -38,33 +38,42 @@ export default function App() {
     };
   }, []);
 
-  // 2. BEI SEITENWECHSEL: HARD RESET
+  // 2. ABSOLUTER RESET BEI JEDEM SEITENWECHSEL
   useLayoutEffect(() => {
     if (!lenisRef.current) return;
-
     const lenis = lenisRef.current;
 
-    // A) Lenis kurz anhalten
+    // A) Lenis stoppen
     lenis.stop();
-    
-    // B) Browser nativ zwingen
-    window.scrollTo(0, 0);
-    document.body.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    
-    // C) Lenis internen Wert sofort überschreiben
-    lenis.scrollTo(0, { immediate: true, force: true });
-    
-    // D) Kurz warten, dann wieder aktivieren
-    // Das verhindert, dass der Browser während des Renderns zurückspringt
-    const timer = setTimeout(() => {
-      lenis.start(); 
-      lenis.resize(); // Wichtig, falls die neue Seite eine andere Höhe hat
-    }, 10);
 
-    return () => clearTimeout(timer);
+    // B) Funktion zum Erzwingen der Top-Position
+    const forceTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      lenis.scrollTo(0, { immediate: true, force: true });
+    };
 
-  }, [location.pathname]); 
+    // Sofort ausführen
+    forceTop();
+
+    // C) Warten bis React & Partikel fertig sind (Timing ist hier alles)
+    // Wir feuern den Reset nach 10ms, 50ms und 150ms nochmal, 
+    // um gegen die Ladezeit der Partikel zu gewinnen.
+    const t1 = setTimeout(forceTop, 10);
+    const t2 = setTimeout(forceTop, 50);
+    const t3 = setTimeout(() => {
+      forceTop();
+      lenis.start();
+      lenis.resize(); // Berechnet die neue Seitenhöhe korrekt
+    }, 150);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, [location.pathname]);
 
   return (
     <Routes location={location} key={location.pathname}>
