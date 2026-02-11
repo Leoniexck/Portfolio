@@ -80,7 +80,7 @@ export default function Home() {
       <main id="projects" className="w-full max-w-360 mx-auto px-5 md:px-12.5 pb-50 pt-25 relative z-10">
         <div className="flex flex-col gap-25 md:gap-37.5">
           <Reveal><ProjectCard title="LMU Students" description="..." image="missing" tags={['App Concept', 'Research', 'UI/UX']} link="/project/lmuapp" year="2023" /></Reveal>
-          <Reveal><ProjectCard title="EduVenture" description="..." image="..." tags={['Web App', 'Gamification', 'Bachelor Thesis']} link="/project/eduventure" year="2024" /></Reveal>
+          <Reveal><ProjectCard title="EduVenture" description="..." image="/images/eduventure.png" tags={['Web App', 'Gamification', 'Bachelor Thesis']} link="/project/eduventure" year="2024" /></Reveal>
           <Reveal><ProjectCard title="HipHopInsight" description="..." image="..." tags={['Interactive Learning', 'Figma', 'Prototyping']} link="/project/HipHopInsight" year="2024" /></Reveal>
           <Reveal><ProjectCard title="MapMyWords" description="..." image="..." tags={['Data Viz', 'Frontend', 'Research']} link="/project/mapmywords" year="2023" /></Reveal>
         </div>
