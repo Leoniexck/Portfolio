@@ -1,98 +1,336 @@
-import { motion } from 'framer-motion';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useRef } from 'react';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 
 // --- UI COMPONENTS ---
 import Navbar from '../components/Navbar';
-import ImageGallery from '../components/ImageGallery';
-import Reveal from '../components/Reveal';
-import SectionHeader from '../components/SectionHeader';
 import SectionSpacer from '../components/SectionSpacer';
 import ScrollToTopButton from '../components/ScrollToTopButton';
-import SpotlightGrid from '../components/SpotlightGrid';
-import MasonryGrid from '../components/MasonryGrid';
-import FeatureShowcase from '../components/FeatureShowcase';
-import FeedbackSwitcher from '../components/FeedbackSwitcher';
 import PageBackground from '../components/PageBackground';
 import ProjectHero from '../components/ProjectHero';
-import ProjectImage from '../components/ProjectImage';
 import ProjectOverview from '../components/ProjectOverview';
 import ProjectCredits from '../components/ProjectCredits';
 import ProjectOutcome from '../components/ProjectOutcome';
 import ProjectFooter from '../components/ProjectFooter';
-import EditorialTextSection from '../components/EditorialTextSection';
-import { caption } from 'framer-motion/client';
+import ImmersiveScroll from '../components/ImmersiveScroll';
+import ConceptMarquee from '../components/ConceptMarquee';
+import EditorialSplitSection from '../components/EditorialSplitSection';
+import FeatureShowcase from '../components/FeatureShowcase';
+import ProjectBrowserHero from '../components/ProjectBrowserHero';
 
+// --- CONSTANTS & DATA ---
 const ACCENT = "#C3641A"; 
 
-export default function MapMyWords() {
+// --- ANIMATION TOOLS ---
+
+// 1. TEXT REVEAL (Mask animation for headers)
+const TextReveal = ({ children, delay = 0 }) => (
+  <div className="overflow-hidden relative">
+    <motion.div
+      initial={{ y: "100%" }}
+      whileInView={{ y: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: delay }}
+    >
+      {children}
+    </motion.div>
+  </div>
+);
+
+// 2. PARALLAX SECTION (Slower scroll speed for depth)
+const ParallaxSection = ({ children, speed = 1 }) => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100 * speed]); 
   
+  return (
+    <div ref={ref} className="relative">
+      <motion.div style={{ y }}>
+        {children}
+      </motion.div>
+    </div>
+  );
+};
+
+// 3. BIG FADE UP (Scale + Fade entry)
+const BigFadeUp = ({ children, delay = 0 }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 100, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 1.2, ease: "easeOut", delay: delay }}
+    >
+      {children}
+    </motion.div>
+);
+
+// --- DATA ---
+const projectDetails = [
+  { label: "Role", value: "UX/UI Designer, Frontend Developer" }, 
+  { label: "Tools", value: "Figma, React, Google API" }, 
+  { label: "Duration", value: "3 1/2 months" }, 
+  { label: "Team", value: "Kaisa Larsen, Ehbal Ablimit" },
+  { label: "Collab", value: "with Lego" }
+];
+
+const creditsData = [
+  { title: "Concept & Design", people: [{ name: "Leonie Kehlenbeck", role: "UX/UI Lead" }] }, 
+  { title: "Engineering", people: [{ name: "Leonie Kehlenbeck", role: "Frontend" }, { name: "Kaisa Larsen", role: "Frontend" }, { name: "Ehbal Ablimit", role: "Frontend" }] }, 
+  { title: "Motion & Video", people: [{ name: "Leonie Kehlenbeck", role: "Editor" }] }
+];
+
+const flowSteps = [
+  {
+    title: "Start Session",
+    text: (<>The facilitator types a name into the input field and presses Enter to add them to the session. A live counter displays the current number of participants out of the maximum (e.g., 0/10). Once the limit is reached, a warning appears. The "Select Question" button activates only after at least one participant joins.</>),
+    src: ['/images/MapMyWords/Participant_01.png', '/images/MapMyWords/Participant_02.png', '/images/MapMyWords/Participant_03.png'],
+    caption: "Participant List Views"
+  },
+  {
+    title: "Question Selection",
+    text: (<>Once participants are set, the facilitator selects a question. Options include: "Randomize Question" for a suggestion, choosing from a predefined list, or typing a custom question. This ensures flexibility for every workshop context.</>),
+    src: ['/images/MapMyWords/Questions.png', '/images/MapMyWords/RandomQuestions.png', '/images/MapMyWords/AddQuestion.png'],
+    caption: ["Questions Overview", "Random Selection", "Add Own Question"]
+  },
+  {
+    title: "Session",
+    text: (<>In the recording session, the question is central. The facilitator selects a speaker (manually or randomly). The active speaker's circle pulses blue. Upon finishing, the system maps the answer to an emoji (Green = Success, Red = Fail). Results can only be viewed once everyone has answered.</>),
+    src: ['/images/MapMyWords/MainScreen.png', '/images/MapMyWords/ChooseSpeaker.png', '/images/MapMyWords/Speaking.png', '/images/MapMyWords/WrongMapping.png', '/images/MapMyWords/SuccessMapping.png'],
+    caption: ["Session Overview", "Speaker Selection", "Active Recording", "Error State", "Success State"]
+  },
+  {
+    title: "View Results",
+    text: (<>The results screen displays a summarizing grid with each participant's name, their mapped emoji, and the transcribed text. Options to "Ask Another Question" (keep group) or "Start New Session" (reset app) are available here.</>),
+    src: '/images/MapMyWords/Summary.png', 
+    caption: "Results Overview"
+  }
+];
+
+const designProcess = [
+  { src: '/images/MapMyWords/First/_00.png', label: "Start Screen" },
+  { src: '/images/MapMyWords/First/_01.png', label: "Empty List" },
+  { src: '/images/MapMyWords/First/_02.png', label: "Enter Part. 1" },
+  { src: '/images/MapMyWords/First/_04.png', label: "Filled List" },
+  { src: '/images/MapMyWords/First/_05.png', label: "Start Session" },
+  { src: '/images/MapMyWords/First/_06.png', label: "Choose Speaker" },
+  { src: '/images/MapMyWords/First/_12.png', label: "Recording" },
+  { src: '/images/MapMyWords/First/_15.png', label: "Generating" },
+  { src: '/images/MapMyWords/First/_final.png', label: "End Screen" },
+];
+
+const futureScreens = [
+  { 
+    src: '/images/MapMyWords/More/_01.png', 
+    caption: "Saved Participant Lists", 
+    text: "Quickly load recurring teams or classes without re-entering names." 
+  }, 
+  { 
+    src: '/images/MapMyWords/More/_02.png', 
+    caption: "Save As Option",
+    text: "Export the current session setup as a template for future use." 
+  },
+  { 
+    src: '/images/MapMyWords/More/_05.png', 
+    caption: "End Session Modal",
+    text: "A comprehensive dialog to confirm closure and offer export options." 
+  },
+  { 
+    src: '/images/MapMyWords/More/_06.png', 
+    caption: "Edit List",
+    text: "Modify participants on the fly even after a list has been loaded." 
+  },
+  { 
+    src: '/images/MapMyWords/More/_07.png', 
+    caption: "Load Presets",
+    text: "Browse and select from a library of previously saved group configurations." 
+  },
+];
+
+
+export default function MapMyWords() {
+  const containerRef = useRef(null);
+  
+  // Progress Bar Logic
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // DATA ...
-  const projectDetails = [{ label: "Role", value: "UX/UI Designer, Frontend Developer" }, { label: "Tools", value: "Figma, React, Google API" }, { label: "Duration", value: "3 1/2 months" }, { label: "Team", value: "Kaisa Larsen, Ehbal Ablimit" }];
-  const creditsData = [{ title: "Concept & Design", people: [{ name: "Leonie Kehlenbeck", role: "UX/UI Lead" }] }, { title: "Engineering", people: [{ name: "Kaisa Larsen", role: "Frontend" }, { name: "Ehbal Ablimit", role: "Frontend" }, { name: "Leonie Kehlenbeck", role: "Frontend" }] }];
-  const participantScreens = [{ src: '/images/MapMyWords/Participant_01.png', caption: 'Empty Participant List' }, { src: '/images/MapMyWords/Participant_02.png', caption: 'Entries in Participant List' }, { src: '/images/MapMyWords/Participant_03.png', caption: 'Full Participant List' }];
-  const QuestionScreens = [{ src: '/images/MapMyWords/Questions.png', caption: 'Question Selection Options' }, { src: '/images/MapMyWords/RandomQuestions.png', caption: 'Use "Randomize Question"' }, { src: '/images/MapMyWords/AddQuestion.png', caption: 'Use "Add Your Own Question"' }];
-  const SessionScreens = [{ src: '/images/MapMyWords/MainScreen.png', caption: 'Start Session' }, { src: '/images/MapMyWords/ChooseSpeaker.png', caption: 'Use “Pick Random Participant”' }, { src: '/images/MapMyWords/Speaking.png', caption: 'Recording of Participant' }, { src: '/images/MapMyWords/WrongMapping.png', caption: 'Success and Fail Recording' }, { src: '/images/MapMyWords/SuccessMapping.png', caption: 'All participants successful' } ];
-
   return (
-    <div className="w-full bg-[#0E0E0E] text-[#F4F4F5] overflow-x-hidden relative selection:bg-[#C3641A] selection:text-white">
+    <div 
+        ref={containerRef}
+        className="w-full bg-[#0E0E0E] text-[#F4F4F5] overflow-x-hidden relative selection:bg-[#C3641A] selection:text-white group"
+        // Global Spotlight Logic
+        onMouseMove={(e) => {
+            const spotlight = document.getElementById('global-spotlight');
+            if(spotlight) {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                spotlight.style.background = `radial-gradient(800px circle at ${x}px ${y}px, rgba(195, 100, 26, 0.12), transparent 80%)`;
+            }
+        }}
+    >
+      
+      {/* 1. TOP PROGRESS BAR */}
+      <motion.div 
+        className="fixed top-0 left-0 right-0 h-1.5 bg-[#C3641A] origin-left z-50 mix-blend-screen"
+        style={{ scaleX }}
+      />
+
+      {/* 2. GLOBAL MOUSE SPOTLIGHT LAYER */}
+      <div 
+        id="global-spotlight"
+        className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-500"
+        style={{ background: 'radial-gradient(600px circle at 50% 50%, rgba(195, 100, 26, 0.15), transparent 80%)' }}
+      />
+
       <Navbar activeSection="projects" />
       <PageBackground accentColor={ACCENT} />
       <ScrollToTopButton accentColor={ACCENT} />
 
-      <main className="relative z-10 w-full">
-        {/* HERO AREA */}
-        <div className="max-w-360 mx-auto px-5 md:px-12.5">
-           <ProjectHero title1="MapMy" title2="Words." year="2025" subtitle={<>An interactive journey through culture and history. <br/><span className="text-white">Never stop learning, because life never stops teaching.</span></>} />
-           <ProjectImage src="/images/hiphop/hiphop-cover.png" accentColor={ACCENT} />
-           <ProjectOverview accentColor={ACCENT} description="MapMyWords is a playful icebreaker designed for hybrid groups of 5–20 participants at the start of a semester, team project, or workshop. It transforms ordinary introductions into a shared, multimodal experience where participants’ spoken answers are instantly mapped to visual and auditory cues, making names, moods, and hobbies easier to remember." details={projectDetails} />
-        </div>
-
-        <EditorialTextSection 
-        number="01"
-        title="Final Implementation."
-        accentColor={ACCENT}
-        text="MapMyWords is an interactive icebreaker tool built with React, TypeScript, and Tailwind CSS, designed to help teams connect in a novel and visual way. The application guides a facilitator through setting up a participant list and selecting from predefined, random, or custom questions."
-        />
-
-        <EditorialTextSection number="02" title="Participant List" accentColor={ACCENT} text="The facilitator types a name into the input field and presses Enter to add them to the session. A live counter displays the current number of participants out of the maximum."/>
-        <div className="max-w-360 mx-auto px-5 md:px-12.5">
-            <Reveal once={true}><ImageGallery items={participantScreens} /></Reveal>
-         </div>
-
-        <EditorialTextSection number="03" title="Question Selection" accentColor={ACCENT} text="Once the participants are set, the facilitator moves to the 'Select a Question' screen. This interface offers three flexible options: the user can click 'Randomize Question' to receive a 'Suggested Question' highlighted in a confirmation box, manually choose directly from the predefined list, or type their own custom question into the input field at the bottom and click 'Add & Select'." />
-        <div className="max-w-360 mx-auto px-5 md:px-12.5">
-            <Reveal once={true}><ImageGallery items={QuestionScreens} /></Reveal>
-         </div>
-
-        <EditorialTextSection number="04" title="Session" accentColor={ACCENT} text="In the main recording session, the chosen question is displayed centrally. The facilitator can either click on a participant's icon directly or use the 'Pick Random Participant' button to randomly select a speaker.
-
-When a participant is selected, their circle pulses blue to indicate they are actively recording, and all other participants are temporarily disabled. After speaking, the system maps their answer to a representative emoji. A successful mapping is indicated by a green circle and a checkmark, while a failed mapping is shown with a red circle, allowing the user to try again.
-
-The 'View Results' button remains disabled until all participants have successfully answered the question (all circles are green). During the session, the facilitator can also 'Change Question', 'Reset Answers', or 'Cancel Session' using the navigation controls." />
-        <div className="max-w-360 mx-auto px-5 md:px-12.5">
-            <Reveal once={true}><ImageGallery items={SessionScreens} /></Reveal>
-         </div>
-
+      <main className="relative z-10 w-full pt-20">
         
-        <div className="max-w-360 mx-auto px-5 md:px-12.5">
-            <SectionSpacer accentColor={ACCENT} />
-            <SectionHeader number="05" title="View Results" text="The results screen displays a grid summarizing the session, showing each participant's name, their mapped emoji, and the full text of their answer under the original question. From here, the facilitator can either click 'Ask Another Question' to run a new round with the same group or 'Start New Session' to reset the application." accentColor={ACCENT} />
-            <Reveal once={true}>
-                <div className="relative mx-auto w-full max-w-250 border-[#1A1A1A] border rounded-[20px] overflow-hidden shadow-2xl bg-[#050505]">
-                    <motion.img whileHover={{ scale: 1.01 }} transition={{ duration: 0.7 }} src="/images/MapMyWords/Summary.png" alt="Result screen" className="w-full h-auto object-cover block opacity-90 hover:opacity-100 transition-opacity" />
+        {/* ================= HERO SECTION ================= */}
+        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 relative">
+            
+            {/* Background Typography */}
+            <div className="mb-12">
+                <TextReveal>
+                    <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 opacity-10 select-none pointer-events-none absolute -top-20 -left-10 z-0">
+                        CONNECT
+                    </h1>
+                </TextReveal>
+                
+                <div className="relative z-10">
+                    <ProjectHero 
+                        title1="MapMy" 
+                        title2="Words." 
+                        year="2025" 
+                        subtitle={<>Gamifying the first five minutes of your meeting. <br/><span className="text-white">Because breaking the ice shouldn't be awkward.</span></>} 
+                    />
                 </div>
-            </Reveal>
+            </div>
+            
+            <BigFadeUp delay={0.2}>
+                <div className="mt-8 mb-24 md:mb-32 relative z-20 hover:scale-[1.01] transition-transform duration-700 ease-out">
+                    <ProjectBrowserHero 
+                        src="/images/MapMyWords/MainScreen.png" 
+                        accentColor={ACCENT} 
+                    />
+                </div>
+            </BigFadeUp>
+
+            <BigFadeUp delay={0.4}>
+                <div className="mb-24">
+                    <ProjectOverview 
+                        accentColor={ACCENT} 
+                        description="Designed for hybrid workshops and semester kick-offs, MapMyWords combats the awkwardness of remote introductions. This interactive tool for 5–20 participants turns a routine formality into a gamified collaborative event. By translating voice into a visual grid, it creates a lasting 'digital artifact' of the group, ensuring that every participant is not just heard, but truly seen and remembered." 
+                        details={projectDetails} 
+                    />
+                </div>
+            </BigFadeUp>
         </div>
 
-        {/* --- Footer Area --- */}
-        <div className="max-w-360 mx-auto px-5 md:px-12.5">
+        <SectionSpacer accentColor={ACCENT} />
+
+        {/* ================= VIDEO SHOWCASE ================= */}
+        <div className="max-w-[1440px] mx-auto relative px-5 md:px-12.5">
+            {/* Ambient Background Blob */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#C3641A] opacity-[0.08] blur-[150px] rounded-full pointer-events-none" />
+            
+            <BigFadeUp>
+                <section className="max-w-[1000px] mx-auto py-10 text-center relative z-10">
+                    <h3 className="text-xs font-mono uppercase tracking-widest text-[#888] mb-8">See it in action</h3>
+                    <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black relative group">
+                        <div className="absolute inset-0 bg-accent/10 blur-3xl -z-10" style={{ backgroundColor: ACCENT }} />
+                        
+                        <video 
+                            src="/videos/MapMyWords.mp4" 
+                            controls 
+                            className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+                        />
+                    </div>
+                </section>
+            </BigFadeUp>
+        </div>
+
+        <SectionSpacer accentColor={ACCENT} />
+
+        {/* ================= FINAL IMPLEMENTATION (Step 01) ================= */}
+        <div className="max-w-[1440px] mx-auto">
+            <TextReveal>
+                <EditorialSplitSection 
+                    number="01"
+                    title="Final Implementation."
+                    accentColor={ACCENT}
+                    text={(
+                        <>
+                            MapMyWords is built with React, TypeScript, and Tailwind CSS. The application guides a facilitator through setting up a participant list and selecting from predefined, random, or custom questions. In the main session, spoken answers are recorded and instantly mapped to representative emojis.
+                        </>
+                    )}
+                />
+            </TextReveal>
+        </div>
+
+        <SectionSpacer accentColor={ACCENT} />
+        
+        {/* 4. IMMERSIVE FLOW */}
+        <BigFadeUp>
+            <ImmersiveScroll steps={flowSteps} accentColor={ACCENT} />
+        </BigFadeUp>
+    
+        <SectionSpacer accentColor={ACCENT} />
+
+        {/* ================= CONCEPT & DESIGN (Step 02) ================= */}
+        <BigFadeUp>
+            <ConceptMarquee 
+                stepNumber="02"
+                title="First Concept & Design."
+                text="These original Figma designs establish the foundational user flow and visual direction. The screens demonstrate the core concept, beginning with a clean interface for adding participants and leading to the main interactive session view."
+                items={designProcess}
+                accentColor={ACCENT}
+            />    
+        </BigFadeUp>
+
+        <SectionSpacer accentColor={ACCENT} />
+
+        {/* ================= NOT IMPLEMENTED (Step 03) ================= */}
+        <div className="max-w-[1440px] mx-auto">
+            <TextReveal>
+                <EditorialSplitSection 
+                    number="03"
+                    title="Not Implemented Functions."
+                    accentColor={ACCENT}
+                    text={(
+                        <>
+                            These designs focus on facilitator efficiency features that didn't make the MVP. This includes "Saved participant lists" to quickly load recurring groups and advanced export options via a "Save as" or "End session" modal.
+                        </>
+                    )}
+                />
+            </TextReveal>
+        </div>
+        
+        <BigFadeUp delay={0.2}>
+            <FeatureShowcase items={futureScreens} accentColor={ACCENT} />
+        </BigFadeUp>
+
+        {/* ================= FOOTER & CREDITS ================= */}
+        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 pb-24">
            <SectionSpacer accentColor={ACCENT} />
-           <ProjectCredits items={creditsData} accentColor={ACCENT} />
-           <ProjectOutcome accentColor={ACCENT} text="By combining gamification with clear analytics, HipHopInsight creates a learning environment where culture meets technology." />
+           
+           <BigFadeUp>
+               <ProjectCredits items={creditsData} accentColor={ACCENT} number="04" />
+           </BigFadeUp>
+           
+           <BigFadeUp delay={0.2}>
+               <ProjectOutcome 
+                    accentColor={ACCENT} 
+                    text="By translating spoken language into a shared visual grid, MapMyWords transforms the friction of hybrid introductions into a playful, multimodal experience where participants feel instantly connected." 
+               />
+           </BigFadeUp>
+           
            <ProjectFooter copyright="© 2026 Leonie Kehlenbeck" />
         </div>
 

@@ -5,6 +5,7 @@ import Lenis from 'lenis';
 import Home from './pages/Home';
 import HipHopInsight from './pages/HipHopInsight';
 import MapMyWords from './pages/MapMyWords';
+import Icons from './pages/Icons';
 
 export default function App() {
   const location = useLocation();
@@ -74,6 +75,7 @@ export default function App() {
       <Route path="/" element={<Home />} />
       <Route path="/project/HipHopInsight" element={<HipHopInsight />} />
       <Route path="/project/MapMyWords" element={<MapMyWords />} />
+      <Route path="/project/Icons" element={<Icons />} />
     </Routes>
   );
 }

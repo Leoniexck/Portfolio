@@ -83,6 +83,7 @@ export default function Home() {
           <Reveal><ProjectCard title="EduVenture" description="..." image="/images/eduventure.png" tags={['Web App', 'Gamification', 'Bachelor Thesis']} link="/project/eduventure" year="2024" /></Reveal>
           <Reveal><ProjectCard title="HipHopInsight" description="..." image="..." tags={['Interactive Learning', 'Figma', 'Prototyping']} link="/project/HipHopInsight" year="2024" /></Reveal>
           <Reveal><ProjectCard title="MapMyWords" description="..." image="..." tags={['Data Viz', 'Frontend', 'Research']} link="/project/mapmywords" year="2023" /></Reveal>
+          <Reveal><ProjectCard title="Icons" description="..." image="..." tags={['Data Viz', 'Frontend', 'Research']} link="/project/icons" year="2026" /></Reveal>
         </div>
       </main>
 
