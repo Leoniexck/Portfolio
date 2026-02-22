@@ -18,7 +18,7 @@ export default function DesignConceptGrid({ number, title, accentColor, data }) 
   if (!data) return null;
 
   return (
-    <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 mb-32">
+    <div className="max-w-360 mx-auto px-5 md:px-12.5 mb-32">
         {/* SECTION HEADER: Title, index number, and animated divider */}
         <div className="mb-16 md:mb-24 flex flex-col items-start w-full">
             <TextReveal>
@@ -55,7 +55,7 @@ export default function DesignConceptGrid({ number, title, accentColor, data }) 
                     <img 
                         src={data.block1.image} 
                         alt={data.block1.title} 
-                        className="w-full max-w-[380px] h-auto drop-shadow-2xl hover:scale-[1.02] transition-transform duration-500 rounded-xl" 
+                        className="w-full max-w-95 h-auto drop-shadow-2xl hover:scale-[1.02] transition-transform duration-500 rounded-xl" 
                     />
                 )}
             </motion.div>
@@ -77,7 +77,7 @@ export default function DesignConceptGrid({ number, title, accentColor, data }) 
                     </p>
                 </div>
                 {data.block3.image && (
-                    <div className="shrink-0 w-full max-w-[280px] xl:max-w-[320px]">
+                    <div className="shrink-0 w-full max-w-70 xl:max-w-[320px]">
                         <img 
                             src={data.block3.image} 
                             alt={data.block3.title} 

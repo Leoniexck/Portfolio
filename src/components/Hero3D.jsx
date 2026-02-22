@@ -19,7 +19,7 @@ export default function Hero3D({ title, subtitle, src, accentColor = "#FFFFFF" }
 
       {/* Main Title Content */}
       <div className="text-center z-20 mb-16 max-w-4xl mx-auto">
-        <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-6xl md:text-8xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/40">
+        <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-6xl md:text-8xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-linear-to-b from-white via-white to-white/40">
           {title}
         </motion.h1>
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-xl md:text-2xl text-[#888] font-light">
@@ -37,7 +37,7 @@ export default function Hero3D({ title, subtitle, src, accentColor = "#FFFFFF" }
                 <div className="ml-4 h-5 w-64 bg-white/5 rounded-full" />
             </div>
             <img src={src} alt="Desktop Interface" className="w-full h-auto block" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-linear-to-tr from-white/5 to-transparent pointer-events-none" />
         </div>
       </motion.div>
     </section>

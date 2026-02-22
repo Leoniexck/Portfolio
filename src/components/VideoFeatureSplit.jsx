@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export default function VideoFeatureSplit({ number, title, description, videoSrc, accentColor, githubLink, status }) {
   return (
-    <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 mb-32">
+    <div className="max-w-360 mx-auto px-5 md:px-12.5 mb-32">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
         
         {/* Visual Column: Video Player with glow effect and status badge */}
@@ -24,7 +24,7 @@ export default function VideoFeatureSplit({ number, title, description, videoSrc
             loop 
             muted 
             playsInline
-            className="relative z-10 w-auto max-w-full h-auto max-h-[500px] object-contain rounded-[24px] shadow-2xl transition-transform duration-700 group-hover:scale-[1.01] border border-white/5"
+            className="relative z-10 w-auto max-w-full h-auto max-h-125 object-contain rounded-3xl shadow-2xl transition-transform duration-700 group-hover:scale-[1.01] border border-white/5"
           />
 
           {status && (

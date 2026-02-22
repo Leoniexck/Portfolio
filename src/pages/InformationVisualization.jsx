@@ -100,7 +100,7 @@ export default function InformationVisualization() {
       
       {/* 1. TOP PROGRESS BAR */}
       <motion.div 
-        className="fixed top-0 left-0 right-0 h-1.5 bg-[#224697] z-[9999]"
+        className="fixed top-0 left-0 right-0 h-1.5 bg-[#224697] z-9999"
         style={{ scaleX, transformOrigin: "0%" }}
       />
 
@@ -125,11 +125,11 @@ export default function InformationVisualization() {
       <main className="relative z-10 w-full pt-20">
         
         {/* ================= HERO SECTION ================= */}
-        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 relative">
+        <div className="max-w-360 mx-auto px-5 md:px-12.5 relative">
             
             <div className="mb-12">
                 <TextReveal>
-                    <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 opacity-10 select-none pointer-events-none absolute -top-20 -left-10 z-0">
+                    <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-linear-to-b from-white to-white/40 opacity-10 select-none pointer-events-none absolute -top-20 -left-10 z-0">
                         DATA
                     </h1>
                 </TextReveal>
@@ -166,7 +166,7 @@ export default function InformationVisualization() {
         {/* ================= POSTER SECTION ================= */}
         
         {/* 1. Header */}
-        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 mb-12">
+        <div className="max-w-360 mx-auto px-5 md:px-12.5 mb-12">
              <TextReveal>
                  <SectionHeader 
                     number="01" 
@@ -178,7 +178,7 @@ export default function InformationVisualization() {
         </div>
 
         {/* 2. The Poster (PURE IMAGE) */}
-        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 relative mb-24">
+        <div className="max-w-360 mx-auto px-5 md:px-12.5 relative mb-24">
             <ParallaxSection speed={0.5}>
                 <BigFadeUp>
                     <div className="relative w-full group">
@@ -195,7 +195,7 @@ export default function InformationVisualization() {
         <SectionSpacer accentColor={ACCENT} />
 
         {/* ================= FOOTER & CREDITS ================= */}
-        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 pb-24">
+        <div className="max-w-360 mx-auto px-5 md:px-12.5 pb-24">
            <SectionSpacer accentColor={ACCENT} />
            
            <BigFadeUp>

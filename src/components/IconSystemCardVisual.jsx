@@ -25,7 +25,7 @@ export default function IconSystemCardVisual({ accentColor = "#397694" }) {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-10 w-[85%] md:w-[75%] lg:w-[65%] aspect-[16/10] md:aspect-video bg-[#1a1a1a] rounded-2xl border border-white/20 shadow-2xl overflow-hidden flex flex-col"
+        className="relative z-10 w-[85%] md:w-[75%] lg:w-[65%] aspect-16/10 md:aspect-video bg-[#1a1a1a] rounded-2xl border border-white/20 shadow-2xl overflow-hidden flex flex-col"
       >
         
         {/* Browser Header (Mac-style traffic lights) */}
@@ -47,7 +47,7 @@ export default function IconSystemCardVisual({ accentColor = "#397694" }) {
                 />
 
                 <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150 mix-blend-overlay" />
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:60px_60px] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-size-[60px_60px] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
             </div>
 
             {/* The Dock: Houses individual animated icons */}
@@ -93,14 +93,14 @@ function CardDockIcon({ src, index, isFolder = false, accentColor }) {
                 {isFolder ? "System" : `Style ${(Math.floor(index/2) + 1)}`}
             </div>
 
-            <div className="relative w-11 h-11 md:w-[60px] md:h-[60px]">
+            <div className="relative w-11 h-11 md:w-15 md:h-15">
                 <div className="absolute inset-0 bg-[#1A1A1A] rounded-[14px] md:rounded-[18px] shadow-lg overflow-hidden transition-colors border border-white/5">
                     {/* Inner glow on hover */}
                     <div 
                         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] opacity-0 group-hover:opacity-50 transition-opacity duration-500"
                         style={{ background: `radial-gradient(circle, ${accentColor}, transparent 70%)`, filter: 'blur(15px)' }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50" />
+                    <div className="absolute inset-0 bg-linear-to-tr from-white/5 to-transparent opacity-50" />
                 </div>
 
                 <div className="absolute inset-0 flex items-center justify-center">

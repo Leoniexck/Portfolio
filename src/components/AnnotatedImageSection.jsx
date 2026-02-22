@@ -9,7 +9,7 @@ export default function AnnotatedImageSection({ accentColor = "#FFFFFF", imageSr
   if (!annotations || annotations.length === 0) return null;
 
   return (
-    <section ref={ref} className="w-full max-w-[1440px] mx-auto px-5 md:px-12.5 mb-32 relative z-10">
+    <section ref={ref} className="w-full max-w-360 mx-auto px-5 md:px-12.5 mb-32 relative z-10">
         
         <div className="flex flex-col lg:flex-row items-stretch justify-between gap-10 lg:gap-20 relative w-full">
             
@@ -20,7 +20,7 @@ export default function AnnotatedImageSection({ accentColor = "#FFFFFF", imageSr
             <div className="w-full lg:w-3/5 flex flex-col lg:flex-row gap-10 lg:gap-16 items-start relative">
                 
                 {/* IMAGE: Aligned with the body text from the section above */}
-                <div className="w-full lg:w-1/2 flex-shrink-0">
+                <div className="w-full lg:w-1/2 shrink-0">
                     <motion.img 
                         initial={{ opacity: 0, y: 20 }} 
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -32,7 +32,7 @@ export default function AnnotatedImageSection({ accentColor = "#FFFFFF", imageSr
                 </div>
 
                 {/* ANNOTATIONS: Positioned next to the image on desktop */}
-                <div className="relative flex-grow h-full flex flex-col gap-10 lg:block">
+                <div className="relative grow h-full flex flex-col gap-10 lg:block">
                     {annotations.map((item, index) => (
                         <motion.div
                             key={index}
@@ -45,9 +45,9 @@ export default function AnnotatedImageSection({ accentColor = "#FFFFFF", imageSr
                         >
                             <div className="relative">
                                 {/* Indicator Dot & Vertical Line */}
-                                <div className="absolute left-[-24px] top-2.5 w-1.5 h-1.5 rounded-full" 
+                                <div className="absolute -left-6 top-2.5 w-1.5 h-1.5 rounded-full" 
                                      style={{ backgroundColor: accentColor }} />
-                                <div className="absolute left-[-21px] top-0 bottom-0 w-px bg-white/10" />
+                                <div className="absolute -left-5.25 top-0 bottom-0 w-px bg-white/10" />
                                 
                                 <p className="text-[#B0B0B0] text-sm md:text-base leading-relaxed text-left">
                                     {item.text}

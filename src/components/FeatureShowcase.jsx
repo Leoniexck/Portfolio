@@ -77,7 +77,6 @@ export default function FeatureShowcase({ items, accentColor }) {
               onClick={() => setIsOpen(true)}
               className="relative aspect-video z-10 w-full h-full flex items-center justify-center cursor-zoom-in"
             >
-              {/* HIER GEÄNDERT: scale-[1.05] hinzugefügt für mehr Größe */}
               <img 
                 src={items[activeIndex].src} 
                 alt={items[activeIndex].caption} 

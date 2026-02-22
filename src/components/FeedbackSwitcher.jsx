@@ -60,7 +60,6 @@ export default function FeedbackSwitcher() {
               onClick={() => setIsOpen(true)}
               className="relative z-10 w-full h-full flex items-center justify-center cursor-zoom-in group"
             >
-              {/* HIER GEÄNDERT: scale-[1.05] als Basis hinzugefügt und Hover auf scale-[1.08] erhöht */}
               <img
                 src={activeState.src}
                 alt={activeState.label}

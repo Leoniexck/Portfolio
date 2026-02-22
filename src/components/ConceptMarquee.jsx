@@ -44,7 +44,7 @@ export default function ConceptMarquee({ title, text, stepNumber, items = [], ac
     <section className="w-full py-24 bg-transparent overflow-hidden">
       
       {/* 1. Editorial Header Section */}
-      <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 mb-16 flex flex-col items-start">
+      <div className="max-w-360 mx-auto px-5 md:px-12.5 mb-16 flex flex-col items-start">
         
         <div className="flex flex-col items-start gap-2 mb-2">
             {/* Step Number (e.g., "02") */}
@@ -90,7 +90,7 @@ export default function ConceptMarquee({ title, text, stepNumber, items = [], ac
               return (
                 <div 
                     key={index}
-                    className="relative shrink-0 h-75 md:h-[450px] w-auto max-w-none bg-[#1A1A1A] border border-white/10 rounded-xl overflow-hidden group select-none cursor-pointer"
+                    className="relative shrink-0 h-75 md:h-112.5 w-auto max-w-none bg-[#1A1A1A] border border-white/10 rounded-xl overflow-hidden group select-none cursor-pointer"
                     onClick={() => setLightboxIndex(index % items.length)}
                 >
                     <img 

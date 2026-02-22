@@ -28,7 +28,7 @@ export default function StepCards({ items, accentColor }) {
             </span>
 
             {/* Phone Frame: aspect-9/19 mimics modern mobile screen dimensions */}
-            <div className="relative z-10 w-full max-w-75 aspect-[9/19] bg-[#111] rounded-[30px] border border-white/10 overflow-hidden shadow-2xl group hover:border-white/20 transition-colors duration-500">
+            <div className="relative z-10 w-full max-w-75 aspect-9/19 bg-[#111] rounded-[30px] border border-white/10 overflow-hidden shadow-2xl group hover:border-white/20 transition-colors duration-500">
                {/* Inner glow/shadow to make the image appear "sunken" into the frame */}
                <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] z-20 rounded-[30px]" />
                

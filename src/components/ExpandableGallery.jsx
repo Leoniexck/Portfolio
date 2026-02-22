@@ -20,7 +20,7 @@ export default function ExpandableGallery({ items }) {
               onMouseEnter={() => setActiveIndex(index)}
               // flex-3 for expanded, flex-1 for collapsed items
               className={`relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-500 ease-in-out group ${
-                isActive ? 'flex-[3]' : 'flex-1'
+                isActive ? 'flex-3' : 'flex-1'
               }`}
               style={{ minHeight: '200px' }}
             >

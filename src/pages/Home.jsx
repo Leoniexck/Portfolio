@@ -9,7 +9,6 @@ import PageBackground from '../components/PageBackground';
 import Spotlight from '../components/Spotlight';
 import IconSystemCardVisual from '../components/IconSystemCardVisual';
 
-// Kleine Hilfs-Komponente für die Kategorie-Überschriften
 const CategoryHeader = ({ title, number }) => (
   <motion.div 
     initial={{ opacity: 0, y: 20 }}
@@ -27,7 +26,7 @@ const CategoryHeader = ({ title, number }) => (
       whileInView={{ width: "100%" }}
       viewport={{ once: true }}
       transition={{ duration: 1.2, ease: "easeInOut", delay: 0.2 }}
-      className="h-px bg-white/10 flex-grow" 
+      className="h-px bg-white/10 grow" 
     />
   </motion.div>
 );
@@ -104,7 +103,6 @@ export default function Home() {
       {/* --- PROJECTS MAIN --- */}
       <main id="projects" className="w-full max-w-360 mx-auto px-5 md:px-12.5 pb-50 pt-25 relative z-10">
         
-        {/* Durch gap-40 schaffen wir klare Trennungen zwischen den Kategorien */}
         <div className="flex flex-col gap-40">
           
           {/* ================= CATEGORY 1: DIGITAL PRODUCTS & UX ================= */}

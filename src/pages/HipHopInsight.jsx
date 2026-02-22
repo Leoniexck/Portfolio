@@ -112,7 +112,7 @@ export default function HipHopInsight() {
       
       {/* 1. TOP PROGRESS BAR (Fixed Z-Index 9999) */}
       <motion.div 
-        className="fixed top-0 left-0 right-0 h-1.5 bg-[#6254B6] z-[9999]"
+        className="fixed top-0 left-0 right-0 h-1.5 bg-[#6254B6] z-9999"
         style={{ scaleX, transformOrigin: "0%" }}
       />
 
@@ -142,7 +142,7 @@ export default function HipHopInsight() {
             {/* Background Typography */}
             <div className="mb-12">
                 <TextReveal>
-                    <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 opacity-10 select-none pointer-events-none absolute -top-20 -left-10 z-0">
+                    <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-linear-to-b from-white to-white/40 opacity-10 select-none pointer-events-none absolute -top-20 -left-10 z-0">
                         CULTURE
                     </h1>
                 </TextReveal>

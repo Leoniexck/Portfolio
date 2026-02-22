@@ -6,7 +6,7 @@ export default function GradeCalculatorSection({ number, title, description, acc
   const isInView = useInView(ref, { once: true, margin: "-10%" });
 
   return (
-    <section ref={ref} className="w-full max-w-[1440px] mx-auto px-5 md:px-12.5 mb-32 mt-24 relative z-10">
+    <section ref={ref} className="w-full max-w-360 mx-auto px-5 md:px-12.5 mb-32 mt-24 relative z-10">
       
       {/* Top Part: Text & Snippet image */}
       <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-20">
@@ -22,7 +22,7 @@ export default function GradeCalculatorSection({ number, title, description, acc
 
           {/* Smaller preview snippet image */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="w-full">
-            <img src={snippetImage} alt="Snippet" className="w-full max-w-[380px] h-auto rounded-xl" />
+            <img src={snippetImage} alt="Snippet" className="w-full max-w-95 h-auto rounded-xl" />
           </motion.div>
         </div>
 
@@ -40,7 +40,7 @@ export default function GradeCalculatorSection({ number, title, description, acc
         <div className="hidden lg:block w-full lg:w-1/3"></div>
 
         <motion.div initial={{ opacity: 0, y: 40 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="w-full lg:w-3/5 flex justify-start">
-          <img src={mockupsImage} alt="Mockups with Arrow" className="w-full max-w-[750px] h-auto drop-shadow-2xl" />
+          <img src={mockupsImage} alt="Mockups with Arrow" className="w-full max-w-187.5 h-auto drop-shadow-2xl" />
         </motion.div>
       </div>
 

@@ -30,7 +30,7 @@ export default function StickyFeatureSection({ features, accentColor }) {
                 className="absolute inset-0 w-full h-full object-cover object-top"
               />
             ))}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-linear-to-b from-black/20 to-transparent pointer-events-none" />
           </div>
         </div>
       </div>

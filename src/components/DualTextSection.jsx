@@ -4,7 +4,7 @@ export default function DualTextSection({ items, accentColor }) {
   if (!items || items.length === 0) return null;
 
   return (
-    <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 mb-32">
+    <div className="max-w-360 mx-auto px-5 md:px-12.5 mb-32">
       {/* 2-column grid that collapses to 1 column on mobile */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
         {items.map((item, index) => (

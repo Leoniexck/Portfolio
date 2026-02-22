@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export default function FeatureSplit({ number, title, description, image, accentColor, githubLink }) {
   return (
-    <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 mb-32">
+    <div className="max-w-360 mx-auto px-5 md:px-12.5 mb-32">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
         
         {/* Left: Content Block */}
@@ -36,7 +36,7 @@ export default function FeatureSplit({ number, title, description, image, accent
         {/* Right: Asset Showcase with subtle glow effect */}
         <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="order-1 lg:order-2 relative w-full flex justify-end group">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full blur-[100px] opacity-15" style={{ backgroundColor: accentColor }} />
-          <img src={image} alt={title} className="relative z-10 w-auto max-h-[500px] object-contain rounded-[24px] shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] border border-white/5" />
+          <img src={image} alt={title} className="relative z-10 w-auto max-h-125 object-contain rounded-3xl shadow-2xl transition-transform duration-700 group-hover:scale-[1.02] border border-white/5" />
         </motion.div>
       </div>
     </div>

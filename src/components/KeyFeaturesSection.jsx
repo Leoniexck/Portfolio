@@ -16,7 +16,7 @@ const TextReveal = ({ children, delay = 0 }) => (
 
 export default function KeyFeaturesSection({ features, accentColor, number }) {
   return (
-    <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 mb-24">
+    <div className="max-w-360 mx-auto px-5 md:px-12.5 mb-24">
       
       {/* Editorial Section Header */}
       <div className="mb-12 md:mb-16 flex flex-col items-start w-full">
@@ -50,7 +50,7 @@ export default function KeyFeaturesSection({ features, accentColor, number }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="flex items-center gap-6 p-6 md:p-8 rounded-[24px] bg-white/[0.03] backdrop-blur-md border border-white/5 hover:bg-white/[0.06] hover:border-white/10 transition-colors shadow-lg"
+            className="flex items-center gap-6 p-6 md:p-8 rounded-3xl bg-white/3 backdrop-blur-md border border-white/5 hover:bg-white/6 hover:border-white/10 transition-colors shadow-lg"
           >
             <div className="text-3xl md:text-4xl shrink-0">
                 {feature.icon}

@@ -110,7 +110,7 @@ export default function Icons() {
       
       {/* 1. TOP PROGRESS BAR (Fixed Z-Index 9999) */}
       <motion.div 
-        className="fixed top-0 left-0 right-0 h-1.5 bg-[#397694] origin-left z-[9999] mix-blend-screen"
+        className="fixed top-0 left-0 right-0 h-1.5 bg-[#397694] origin-left z-9999 mix-blend-screen"
         style={{ scaleX, transformOrigin: "0%" }}
       />
 
@@ -140,7 +140,7 @@ export default function Icons() {
             {/* Large background typography (SYSTEM) */}
             <div className="mb-12">
                 <TextReveal>
-                    <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 opacity-20 select-none pointer-events-none absolute -top-20 -left-10 z-0">
+                    <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-linear-to-b from-white to-white/40 opacity-20 select-none pointer-events-none absolute -top-20 -left-10 z-0">
                         SYSTEM
                     </h1>
                 </TextReveal>

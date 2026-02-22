@@ -20,7 +20,7 @@ export default function ProjectBrowserHero({ src, accentColor = "#6254B6" }) {
             
             {/* Visual background atmospheric layers */}
             <div className="absolute w-[60%] h-[60%] rounded-full blur-[120px] opacity-40 animate-pulse-slow" style={{ backgroundColor: accentColor }} />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent rounded-[30px] border-t border-white/10 backdrop-blur-[2px]" />
+            <div className="absolute inset-0 bg-linear-to-b from-white/5 to-transparent rounded-[30px] border-t border-white/10 backdrop-blur-[2px]" />
 
             <motion.div style={{ y, scale }} className="relative z-10 w-full h-full flex items-center justify-center p-4 md:p-16">
               <div className="w-full max-w-6xl">

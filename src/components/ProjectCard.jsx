@@ -5,7 +5,7 @@ export default function ProjectCard({ title, description, image, customVisual, t
     <a href={link} className="group block w-full cursor-pointer">
       
       {/* Main visual container with various overlays (noise, glow, vignette) */}
-      <div className="relative w-full aspect-video md:aspect-[2/1] rounded-[24px] overflow-hidden mb-8 md:mb-12 flex items-center justify-center">
+      <div className="relative w-full aspect-video md:aspect-2/1 rounded-3xl overflow-hidden mb-8 md:mb-12 flex items-center justify-center">
         
         {/* Atmospheric layers for texture and lighting */}
         <div className="absolute inset-0 pointer-events-none z-0">
@@ -14,12 +14,12 @@ export default function ProjectCard({ title, description, image, customVisual, t
                 style={{ backgroundColor: accentColor }}
             />
             <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150 mix-blend-overlay" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:60px_60px] mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_20%,transparent_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-size-[60px_60px] mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_20%,transparent_100%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#0E0E0E_90%)]" />
         </div>
 
         {/* Inner shadow to blend card edges with the background */}
-        <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_80px_20px_#0E0E0E] rounded-[24px]" />
+        <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_80px_20px_#0E0E0E] rounded-3xl" />
 
         {/* Logic to render either a complex custom visual or a simple image */}
         {customVisual ? (

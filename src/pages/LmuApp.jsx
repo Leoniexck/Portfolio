@@ -12,7 +12,7 @@ import ProjectCredits from '../components/ProjectCredits';
 import ProjectOutcome from '../components/ProjectOutcome';
 import ProjectFooter from '../components/ProjectFooter';
 import ProjectImage from '../components/ProjectImage';
-import DesignConceptGrid from '../components/DesignConceptGrid'; // <--- NEUER IMPORT
+import DesignConceptGrid from '../components/DesignConceptGrid'; 
 import EditorialSplitSection from '../components/EditorialSplitSection';
 import AnnotatedImageSection from '../components/AnnotatedImageSection';
 import GradeCalculatorSection from '../components/GradeCalculatorSection';
@@ -57,7 +57,6 @@ const creditsData = [
   { title: "Concept & Design", people: [{ name: "Leonie Kehlenbeck", role: "UX/UI Design" }] }, 
 ];
 
-// NEU: Daten für deine Konzept-Sektion
 const conceptData = {
     block1: {
         title: "What is New?",
@@ -126,7 +125,7 @@ export default function LmuApp() {
     >
       
       <motion.div 
-        className="fixed top-0 left-0 right-0 h-1.5 z-[9999]"
+        className="fixed top-0 left-0 right-0 h-1.5 z-9999"
         style={{ scaleX, transformOrigin: "0%", backgroundColor: ACCENT }}
       />
 
@@ -150,10 +149,10 @@ export default function LmuApp() {
       <main className="relative z-10 w-full pt-20">
         
         {/* ================= HERO SECTION ================= */}
-        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 relative">
+        <div className="max-w-360 mx-auto px-5 md:px-12.5 relative">
             <div className="mb-12">
                 <TextReveal>
-                    <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 opacity-10 select-none pointer-events-none absolute -top-20 -left-10 z-0">
+                    <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-linear-to-b from-white to-white/40 opacity-10 select-none pointer-events-none absolute -top-20 -left-10 z-0">
                         LMU
                     </h1>
                 </TextReveal>
@@ -195,7 +194,7 @@ export default function LmuApp() {
 
         <SectionSpacer accentColor={ACCENT} />
 
-        <div className="max-w-[1440px] mx-auto">
+        <div className="max-w-360 mx-auto">
             <TextReveal>
                 <EditorialSplitSection 
                     number="01"
@@ -234,7 +233,7 @@ export default function LmuApp() {
         <SectionSpacer accentColor={ACCENT} />     
 
         {/* ================= FOOTER & CREDITS ================= */}
-        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 pb-24">
+        <div className="max-w-360 mx-auto px-5 md:px-12.5 pb-24">
            
            <BigFadeUp>
                <ProjectCredits items={creditsData} accentColor={ACCENT} number="02" />

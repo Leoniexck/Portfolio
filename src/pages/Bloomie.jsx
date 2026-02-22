@@ -130,7 +130,7 @@ export default function Bloomie() {
       
       {/* 1. TOP PROGRESS BAR */}
       <motion.div 
-        className="fixed top-0 left-0 right-0 h-1.5 z-[9999]"
+        className="fixed top-0 left-0 right-0 h-1.5 z-9999"
         style={{ scaleX, transformOrigin: "0%", backgroundColor: ACCENT }}
       />
 
@@ -156,12 +156,12 @@ export default function Bloomie() {
       <main className="relative z-10 w-full pt-20">
         
         {/* ================= HERO SECTION ================= */}
-        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 relative">
+        <div className="max-w-360 mx-auto px-5 md:px-12.5 relative">
             
             <div className="mb-12">
                 <TextReveal>
                     {/* Oversized background text for depth */}
-                    <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 opacity-10 select-none pointer-events-none absolute -top-20 -left-10 z-0">
+                    <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-linear-to-b from-white to-white/40 opacity-10 select-none pointer-events-none absolute -top-20 -left-10 z-0">
                         BLOOM
                     </h1>
                 </TextReveal>
@@ -210,11 +210,11 @@ export default function Bloomie() {
         <SectionSpacer accentColor={ACCENT} />
 
         {/* ================= VIDEO SHOWCASE: Dynamic lighting effect behind video ================= */}
-        <div className="max-w-[1440px] mx-auto relative px-5 md:px-12.5 mb-24">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-[0.08] blur-[150px] rounded-full pointer-events-none" style={{ backgroundColor: ACCENT }} />
+        <div className="max-w-360 mx-auto relative px-5 md:px-12.5 mb-24">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 opacity-[0.08] blur-[150px] rounded-full pointer-events-none" style={{ backgroundColor: ACCENT }} />
             
             <BigFadeUp>
-                <section className="max-w-[1000px] mx-auto py-10 text-center relative z-10">
+                <section className="max-w-250 mx-auto py-10 text-center relative z-10">
                     <h3 className="text-xs font-mono uppercase tracking-widest text-[#888] mb-8">See it in action</h3>
                     <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black relative group">
                         <video src="/videos/Bloomie.MOV" controls className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
@@ -228,7 +228,7 @@ export default function Bloomie() {
 
         <SectionSpacer accentColor={ACCENT} />
 
-        <div className="max-w-[1440px] mx-auto">
+        <div className="max-w-360 mx-auto">
              <TextReveal>
                 <EditorialSplitSection 
                     number="02"
@@ -270,7 +270,7 @@ export default function Bloomie() {
         <SectionSpacer accentColor={ACCENT} />
 
         {/* ================= FOOTER & CREDITS ================= */}
-        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 pb-24">
+        <div className="max-w-360 mx-auto px-5 md:px-12.5 pb-24">
            <BigFadeUp>
                <ProjectCredits items={creditsData} accentColor={ACCENT} number="07" />
            </BigFadeUp>
