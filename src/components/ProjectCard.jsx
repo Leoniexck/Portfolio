@@ -1,56 +1,66 @@
-import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
-function ProjectCard({ title, category, description, image, tags, link }) {
+export default function ProjectCard({ title, description, image, customVisual, tags, link, year, accentColor }) {
   return (
-    <div className="w-full mb-20">
+    <a href={link} className="group block w-full cursor-pointer">
       
-      {/* 1. INTERACTIVE IMAGE CARD */}
-      <Link to={link} className="block group cursor-pointer">
+      {/* Main visual container with various overlays (noise, glow, vignette) */}
+      <div className="relative w-full aspect-video md:aspect-[2/1] rounded-[24px] overflow-hidden mb-8 md:mb-12 flex items-center justify-center">
         
-        {/* Container uses a custom background and subtle scale effect on hover */}
-        <div className="bg-project-bg rounded-[15px] w-full pt-15 pb-10 px-4 flex flex-col items-center relative transition-transform duration-500 hover:scale-[1.01]">
-          
-          {/* Visual Asset: Centers the image with a heavy drop shadow for depth */}
-          <div className="w-full flex justify-center mb-12">
-            <img 
-              src={image} 
-              alt={title} 
-              /* max-h limits prevent vertical bloat; object-contain maintains aspect ratio */
-              className="w-auto h-auto max-h-100 md:max-h-112.5 max-w-full object-contain drop-shadow-2xl transform group-hover:scale-[1.02] transition-transform duration-500" 
+        {/* Atmospheric layers for texture and lighting */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+            <div 
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] rounded-full blur-[150px] opacity-15 group-hover:opacity-35 transition-opacity duration-1000 mix-blend-screen"
+                style={{ backgroundColor: accentColor }}
             />
-          </div>
+            <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150 mix-blend-overlay" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:60px_60px] mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_20%,transparent_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#0E0E0E_90%)]" />
+        </div>
 
-          {/* Tag Cloud: Centered pill-style labels */}
-          <div className="flex flex-wrap justify-center gap-2">
+        {/* Inner shadow to blend card edges with the background */}
+        <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_80px_20px_#0E0E0E] rounded-[24px]" />
+
+        {/* Logic to render either a complex custom visual or a simple image */}
+        {customVisual ? (
+           <div className="relative z-10 w-full h-full flex items-center justify-center transition-transform duration-1000 ease-[0.16,1,0.3,1] group-hover:scale-[1.02]">
+             {customVisual}
+           </div>
+        ) : (
+          <motion.img 
+            src={image} 
+            alt={title} 
+            className="relative z-10 w-full h-full object-contain p-4 md:p-8 transition-transform duration-1000 ease-[0.16,1,0.3,1] group-hover:scale-105 drop-shadow-xl"
+          />
+        )}
+        
+      </div>
+
+      {/* Project details area */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12">
+        <div className="md:col-span-8 flex flex-col items-start">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#F4F4F5] mb-4 transition-colors duration-300 group-hover:text-white">
+            {title}
+          </h2>
+          <p className="text-[#888] text-base md:text-lg leading-relaxed max-w-2xl">
+            {description}
+          </p>
+        </div>
+
+        {/* Metadata: Year and Category Tags */}
+        <div className="md:col-span-4 flex flex-col md:items-end gap-6 md:gap-4 mt-2 md:mt-0">
+          <span className="font-mono text-sm tracking-widest text-[#555] group-hover:text-white/80 transition-colors duration-300">
+            {year}
+          </span>
+          <div className="flex flex-wrap gap-2 md:justify-end">
             {tags.map((tag, index) => (
-              <span 
-                key={index} 
-                className="bg-black/5 text-tag-text font-sans text-[13px] md:text-[14px] px-3 py-1.5 rounded-lg"
-              >
+              <span key={index} className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-xs text-[#aaa] font-medium tracking-wide transition-colors duration-300 group-hover:border-white/20 group-hover:text-white">
                 {tag}
               </span>
             ))}
           </div>
-
         </div>
-      </Link>
-
-      {/* 2. EXTERNAL METADATA: Title and description placed below the card */}
-      <div className="mt-7.5 w-full px-0">
-        
-        <div className="flex items-start justify-between mb-1">
-            <h2 className="text-white text-[28px] md:text-[32px] font-bold leading-none">
-              {title} 
-            </h2>
-        </div>
-
-        <p className="text-text-secondary text-[16px] md:text-[18px] leading-relaxed w-full">
-          {description}
-        </p>
       </div>
-
-    </div>
+    </a>
   );
 }
-
-export default ProjectCard;

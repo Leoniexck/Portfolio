@@ -8,7 +8,7 @@ export default function ProjectCredits({ items, accentColor, number = "07" }) {
           
           <div className="relative">
              <span className="absolute -top-6 left-0 text-[12px] font-mono" style={{ color: accentColor }}>{number}</span>
-             <h2 className="text-[42px] md:text-[64px] font-bold leading-[0.9] tracking-tight text-white">Credits</h2>
+             <h2 className="text-3xl md:text-5xl font-bold leading-[0.9] tracking-tight text-white">Credits.</h2>
           </div>
 
           <div className="flex flex-col md:flex-row gap-12 md:gap-24 md:text-right">

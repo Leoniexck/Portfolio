@@ -75,9 +75,14 @@ export default function FeatureShowcase({ items, accentColor }) {
               exit={{ opacity: 0, x: -20, scale: 0.98 }}
               transition={{ duration: 0.5, ease: [0.2, 1, 0.3, 1] }}
               onClick={() => setIsOpen(true)}
-              className="relative z-10 w-full cursor-zoom-in"
+              className="relative aspect-video z-10 w-full h-full flex items-center justify-center cursor-zoom-in"
             >
-              <img src={items[activeIndex].src} alt={items[activeIndex].caption} className="w-full h-auto max-h-125 lg:max-h-162.5 object-contain rounded-2xl shadow-2xl mx-auto" />
+              {/* HIER GEÄNDERT: scale-[1.05] hinzugefügt für mehr Größe */}
+              <img 
+                src={items[activeIndex].src} 
+                alt={items[activeIndex].caption} 
+                className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl mx-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] scale-[1.08]" 
+              />
             </motion.div>
           </AnimatePresence>
         </div>

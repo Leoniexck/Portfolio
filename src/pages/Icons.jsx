@@ -1,5 +1,5 @@
-import { useLayoutEffect, useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { useLayoutEffect, useRef, useEffect } from 'react';
+import { motion, useScroll, useSpring, useTransform, useMotionTemplate, useMotionValue } from 'framer-motion';
 
 // --- UI COMPONENTS ---
 import Navbar from '../components/Navbar';
@@ -19,7 +19,9 @@ import IconSystemHero from '../components/IconSystemHero';
 // --- CONSTANTS ---
 const ACCENT = "#397694"; 
 
-// Slides text up from a hidden overflow mask (Editorial look)
+// --- ANIMATION TOOLS ---
+
+// 1. TEXT REVEAL
 const TextReveal = ({ children, delay = 0 }) => (
   <div className="overflow-hidden relative">
     <motion.div
@@ -33,10 +35,13 @@ const TextReveal = ({ children, delay = 0 }) => (
   </div>
 );
 
-// Creates 3D depth by moving content slower than the scroll speed
+// 2. PARALLAX SECTION
 const ParallaxSection = ({ children, speed = 1 }) => {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const { scrollYProgress } = useScroll({ 
+      target: ref, 
+      offset: ["start end", "end start"] 
+  });
   const y = useTransform(scrollYProgress, [0, 1], [0, -100 * speed]); 
   
   return (
@@ -48,7 +53,7 @@ const ParallaxSection = ({ children, speed = 1 }) => {
   );
 };
 
-// Large entry animation (Scale In + Fade Up) for major visual blocks
+// 3. BIG FADE UP
 const BigFadeUp = ({ children, delay = 0 }) => (
     <motion.div
       initial={{ opacity: 0, y: 100, scale: 0.95 }}
@@ -73,9 +78,25 @@ const creditsData = [
 export default function Icons() {
   const containerRef = useRef(null);
   
-  // Setup Scroll Progress Bar logic
-  const { scrollYProgress } = useScroll();
+  // --- FIXED PROGRESS BAR LOGIC ---
+  const { scrollYProgress } = useScroll({ 
+    target: containerRef,
+    offset: ["start start", "end end"] 
+  }); 
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  // --- FIXED MOUSE SPOTLIGHT LOGIC ---
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    function updateMouse(e) {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+    }
+    window.addEventListener("mousemove", updateMouse);
+    return () => window.removeEventListener("mousemove", updateMouse);
+  }, [mouseX, mouseY]);
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
@@ -84,30 +105,27 @@ export default function Icons() {
   return (
     <div 
         ref={containerRef} 
-        className="w-full bg-[#0E0E0E] text-[#F4F4F5] overflow-x-hidden relative selection:bg-[#C3641A] selection:text-white group"
-        // Update spotlight position globally on mouse move
-        onMouseMove={(e) => {
-            const spotlight = document.getElementById('global-spotlight');
-            if(spotlight) {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                spotlight.style.background = `radial-gradient(800px circle at ${x}px ${y}px, rgba(57, 118, 148, 0.12), transparent 80%)`;
-            }
-        }}
+        className="w-full bg-[#0E0E0E] text-[#F4F4F5] overflow-x-hidden relative selection:bg-[#397694] selection:text-white"
     >
       
-      {/* 1. TOP PROGRESS BAR */}
+      {/* 1. TOP PROGRESS BAR (Fixed Z-Index 9999) */}
       <motion.div 
-        className="fixed top-0 left-0 right-0 h-1.5 bg-[#C3641A] origin-left z-50 mix-blend-screen"
-        style={{ scaleX }}
+        className="fixed top-0 left-0 right-0 h-1.5 bg-[#397694] origin-left z-[9999] mix-blend-screen"
+        style={{ scaleX, transformOrigin: "0%" }}
       />
 
-      {/* 2. GLOBAL MOUSE SPOTLIGHT LAYER */}
-      <div 
-        id="global-spotlight"
-        className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-500"
-        style={{ background: 'radial-gradient(600px circle at 50% 50%, rgba(57, 118, 148, 0.15), transparent 80%)' }}
+      {/* 2. GLOBAL MOUSE SPOTLIGHT (Fixed Position + Subtle 8%) */}
+      <motion.div 
+        className="fixed inset-0 z-30 pointer-events-none transition-opacity duration-500"
+        style={{ 
+            background: useMotionTemplate`
+                radial-gradient(
+                    650px circle at ${mouseX}px ${mouseY}px,
+                    rgba(57, 118, 148, 0.08),
+                    transparent 80%
+                )
+            ` 
+        }}
       />
 
       <Navbar activeSection="projects" />
@@ -117,7 +135,7 @@ export default function Icons() {
       <main className="relative z-10 w-full pt-20">
         
         {/* ================= HERO SECTION ================= */}
-        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 relative">
+        <div className="max-w-360 mx-auto px-5 md:px-12.5 relative">
             
             {/* Large background typography (SYSTEM) */}
             <div className="mb-12">
@@ -160,9 +178,9 @@ export default function Icons() {
 
         {/* ================= STYLE 1: FILLED ================= */}
         <div className="relative py-10">
-            <div className="absolute top-[20%] right-0 w-[400px] h-[400px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
+            <div className="absolute top-[20%] right-0 w-100 h-100 bg-white/5 rounded-full blur-[150px] pointer-events-none" />
 
-            <div className="max-w-[1440px] mx-auto">
+            <div className="max-w-360 mx-auto">
                 <TextReveal>
                      <EditorialSplitSection 
                         number="01"
@@ -218,7 +236,7 @@ export default function Icons() {
         {/* ================= STYLE 2: OUTLINE ================= */}
         <div className="relative py-10">
             
-            <div className="max-w-[1440px] mx-auto">
+            <div className="max-w-360 mx-auto">
                 <TextReveal>
                     <EditorialSplitSection 
                         number="02"
@@ -271,7 +289,7 @@ export default function Icons() {
 
         {/* ================= STYLE 3: BOLD ================= */}
         <div className="relative py-10">
-            <div className="max-w-[1440px] mx-auto">
+            <div className="max-w-360 mx-auto">
                 <TextReveal>
                     <EditorialSplitSection 
                         number="03"
@@ -320,8 +338,8 @@ export default function Icons() {
             </BigFadeUp>
         </div>
 
-        {/* FOOTER SECTION */}
-        <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 pb-24">
+        {/* FOOTER */}
+        <div className="max-w-360 mx-auto px-5 md:px-12.5 pb-24">
            <SectionSpacer accentColor={ACCENT} />
            
            <BigFadeUp>

@@ -1,5 +1,5 @@
-import { useLayoutEffect, useRef } from 'react';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { useLayoutEffect, useRef, useEffect } from 'react';
+import { motion, useScroll, useSpring, useTransform, useMotionTemplate, useMotionValue } from 'framer-motion';
 
 // --- UI COMPONENTS ---
 import Navbar from '../components/Navbar';
@@ -22,7 +22,7 @@ const ACCENT = "#C3641A";
 
 // --- ANIMATION TOOLS ---
 
-// 1. TEXT REVEAL (Mask animation for headers)
+// 1. TEXT REVEAL
 const TextReveal = ({ children, delay = 0 }) => (
   <div className="overflow-hidden relative">
     <motion.div
@@ -36,10 +36,13 @@ const TextReveal = ({ children, delay = 0 }) => (
   </div>
 );
 
-// 2. PARALLAX SECTION (Slower scroll speed for depth)
+// 2. PARALLAX SECTION
 const ParallaxSection = ({ children, speed = 1 }) => {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const { scrollYProgress } = useScroll({ 
+      target: ref, 
+      offset: ["start end", "end start"] 
+  });
   const y = useTransform(scrollYProgress, [0, 1], [0, -100 * speed]); 
   
   return (
@@ -51,7 +54,7 @@ const ParallaxSection = ({ children, speed = 1 }) => {
   );
 };
 
-// 3. BIG FADE UP (Scale + Fade entry)
+// 3. BIG FADE UP
 const BigFadeUp = ({ children, delay = 0 }) => (
     <motion.div
       initial={{ opacity: 0, y: 100, scale: 0.95 }}
@@ -68,7 +71,8 @@ const projectDetails = [
   { label: "Role", value: "UX/UI Designer, Frontend Developer" }, 
   { label: "Tools", value: "Figma, React, Google API" }, 
   { label: "Duration", value: "3 1/2 months" }, 
-  { label: "Team", value: "Kaisa Larsen, Ehbal Ablimit" },
+  { label: "Team", value: "Kaisa Larsen, Ehbal Ablimit" }, 
+  { label: "Course", value: "Multimodal Interaction, Aarhus University" },
   { label: "Collab", value: "with Lego" }
 ];
 
@@ -149,9 +153,25 @@ const futureScreens = [
 export default function MapMyWords() {
   const containerRef = useRef(null);
   
-  // Progress Bar Logic
-  const { scrollYProgress } = useScroll();
+  // --- PROGRESS BAR LOGIC ---
+  const { scrollYProgress } = useScroll({ 
+    target: containerRef,
+    offset: ["start start", "end end"] 
+  }); 
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  // --- MOUSE SPOTLIGHT LOGIC ---
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    function updateMouse(e) {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+    }
+    window.addEventListener("mousemove", updateMouse);
+    return () => window.removeEventListener("mousemove", updateMouse);
+  }, [mouseX, mouseY]);
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
@@ -160,31 +180,32 @@ export default function MapMyWords() {
   return (
     <div 
         ref={containerRef}
-        className="w-full bg-[#0E0E0E] text-[#F4F4F5] overflow-x-hidden relative selection:bg-[#C3641A] selection:text-white group"
-        // Global Spotlight Logic
-        onMouseMove={(e) => {
-            const spotlight = document.getElementById('global-spotlight');
-            if(spotlight) {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                spotlight.style.background = `radial-gradient(800px circle at ${x}px ${y}px, rgba(195, 100, 26, 0.12), transparent 80%)`;
-            }
-        }}
+        className="w-full bg-[#0E0E0E] text-[#F4F4F5] overflow-x-hidden relative selection:bg-[#C3641A] selection:text-white"
     >
       
       {/* 1. TOP PROGRESS BAR */}
       <motion.div 
-        className="fixed top-0 left-0 right-0 h-1.5 bg-[#C3641A] origin-left z-50 mix-blend-screen"
-        style={{ scaleX }}
+        className="fixed top-0 left-0 right-0 h-1.5 bg-[#C3641A] z-[9999]"
+        style={{ scaleX, transformOrigin: "0%" }}
       />
 
-      {/* 2. GLOBAL MOUSE SPOTLIGHT LAYER */}
-      <div 
-        id="global-spotlight"
-        className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-500"
-        style={{ background: 'radial-gradient(600px circle at 50% 50%, rgba(195, 100, 26, 0.15), transparent 80%)' }}
+      {/* 2. GLOBAL MOUSE SPOTLIGHT (Subtiler gemacht) */}
+      <motion.div 
+        className="fixed inset-0 z-30 pointer-events-none transition-opacity duration-500"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              650px circle at ${mouseX}px ${mouseY}px,
+              rgba(195, 100, 26, 0.08), 
+              transparent 80%
+            )
+          `
+        }}
       />
+      {/* ÄNDERUNGEN AM SPOTLIGHT:
+         1. Radius: 600px -> 650px (Weicherer Verlauf)
+         2. Opacity: 0.15 -> 0.08 (Nur noch 8% Deckkraft, sehr subtil)
+      */}
 
       <Navbar activeSection="projects" />
       <PageBackground accentColor={ACCENT} />
@@ -195,7 +216,6 @@ export default function MapMyWords() {
         {/* ================= HERO SECTION ================= */}
         <div className="max-w-[1440px] mx-auto px-5 md:px-12.5 relative">
             
-            {/* Background Typography */}
             <div className="mb-12">
                 <TextReveal>
                     <h1 className="text-[120px] md:text-[180px] font-bold leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 opacity-10 select-none pointer-events-none absolute -top-20 -left-10 z-0">
@@ -237,7 +257,6 @@ export default function MapMyWords() {
 
         {/* ================= VIDEO SHOWCASE ================= */}
         <div className="max-w-[1440px] mx-auto relative px-5 md:px-12.5">
-            {/* Ambient Background Blob */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#C3641A] opacity-[0.08] blur-[150px] rounded-full pointer-events-none" />
             
             <BigFadeUp>
@@ -276,10 +295,12 @@ export default function MapMyWords() {
 
         <SectionSpacer accentColor={ACCENT} />
         
-        {/* 4. IMMERSIVE FLOW */}
-        <BigFadeUp>
-            <ImmersiveScroll steps={flowSteps} accentColor={ACCENT} />
-        </BigFadeUp>
+        {/* 4. IMMERSIVE FLOW - Wrapped in Parallax Section */}
+        <div className="relative">
+            <ParallaxSection speed={0.5}>
+                <ImmersiveScroll steps={flowSteps} accentColor={ACCENT} />
+            </ParallaxSection>
+        </div>
     
         <SectionSpacer accentColor={ACCENT} />
 

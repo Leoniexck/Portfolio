@@ -94,7 +94,7 @@ function SingleFeatureBlock({ step, index, accentColor }) {
             <span className="font-mono text-sm tracking-tighter" style={{ color: accentColor }}>
               0{index + 1}
             </span>
-            <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+            <h3 className="text-3xl md:text-5xl font-bold text-white leading-tight">
               {step.title}
             </h3>
           </div>

@@ -6,6 +6,10 @@ import Home from './pages/Home';
 import HipHopInsight from './pages/HipHopInsight';
 import MapMyWords from './pages/MapMyWords';
 import Icons from './pages/Icons';
+import InformationVisualization from './pages/InformationVisualization';
+import VRtist from './pages/VRtist';
+import Bloomie from './pages/Bloomie';
+import LmuApp from './pages/LmuApp';
 
 export default function App() {
   const location = useLocation();
@@ -76,6 +80,10 @@ export default function App() {
       <Route path="/project/HipHopInsight" element={<HipHopInsight />} />
       <Route path="/project/MapMyWords" element={<MapMyWords />} />
       <Route path="/project/Icons" element={<Icons />} />
+      <Route path="/project/InformationVisualization" element={<InformationVisualization />} />
+      <Route path="/project/VRtist" element={<VRtist />} />
+      <Route path="/project/Bloomie" element={<Bloomie />} />
+      <Route path="/project/LmuApp" element={<LmuApp />} />
     </Routes>
   );
 }

@@ -60,11 +60,11 @@ export default function FeedbackSwitcher() {
               onClick={() => setIsOpen(true)}
               className="relative z-10 w-full h-full flex items-center justify-center cursor-zoom-in group"
             >
-              {/* Image uses drop-shadow instead of border for a "floating" asset look */}
+              {/* HIER GEÄNDERT: scale-[1.05] als Basis hinzugefügt und Hover auf scale-[1.08] erhöht */}
               <img
                 src={activeState.src}
                 alt={activeState.label}
-                className="max-w-full max-h-full object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-transform duration-1000 group-hover:scale-105"
+                className="max-w-full max-h-full object-contain rounded-2xl drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-transform duration-1000 scale-[1.08] group-hover:scale-[1.08]"
               />
             </motion.div>
           </AnimatePresence>
